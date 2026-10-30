@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Galaxy Classifier</title>
+  <style>
+    :root {
+      --bg: #070914;
+      --card: rgba(255, 255, 255, 0.045);
+      --border: rgba(255, 255, 255, 0.10);
+      --text: #e6e9f5;
+      --muted: #98a0bd;
+      --cyan: #22d3ee;
+      --violet: #a78bfa;
+      --green: #34d399;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
+      line-height: 1.65;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 15% 0%, rgba(167, 139, 250, 0.18), transparent 50%),
+        radial-gradient(ellipse at 85% 10%, rgba(34, 211, 238, 0.14), transparent 45%),
+        var(--bg);
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+    .wrap { max-width: 860px; margin: 0 auto; padding: 3rem 1.25rem 2rem; }
+    header { text-align: center; margin-bottom: 2.5rem; }
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      margin: 0 0 0.6rem;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, var(--cyan), var(--violet));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .subtitle {
+      display: inline-block;
+      color: var(--muted);
+      font-size: 0.95rem;
+      padding: 0.35rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--card);
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+    h2 {
+      margin: 0 0 1rem;
+      font-size: 1.3rem;
+      color: #fff;
+      padding-bottom: 0.6rem;
+      border-bottom: 2px solid transparent;
+      border-image: linear-gradient(90deg, var(--cyan), transparent) 1;
+    }
+    p { margin: 0.5rem 0; }
+    strong { color: #fff; }
+    .table-scroll { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; min-width: 480px; }
+    th, td { padding: 0.85rem 1rem; text-align: center; }
+    th {
+      background: linear-gradient(90deg, rgba(34, 211, 238, 0.18), rgba(167, 139, 250, 0.18));
+      color: var(--cyan);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    td { border-top: 1px solid var(--border); }
+    tr:nth-child(even) td { background: rgba(255, 255, 255, 0.025); }
+    tbody tr:hover td { background: rgba(34, 211, 238, 0.07); }
+    td:first-child { font-weight: 600; text-align: left; }
+    .highlight { color: var(--green); font-weight: 700; font-size: 1.1em; }
+    ul { padding-left: 0; list-style: none; margin: 0; }
+    ul li { position: relative; padding: 0.35rem 0 0.35rem 1.6rem; }
+    ul li::before { content: "✦"; position: absolute; left: 0; color: var(--violet); }
+    a { color: var(--cyan); text-decoration: none; border-bottom: 1px dashed rgba(34, 211, 238, 0.5); }
+    a:hover { color: #fff; border-bottom-style: solid; }
+    .finding {
+      border-left: 4px solid var(--green);
+      background: linear-gradient(90deg, rgba(52, 211, 153, 0.12), var(--card));
+    }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 2.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+    }
+    @media (max-width: 520px) { section { padding: 1.25rem; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>🔭 Galaxy Morphology Classification</h1>
+      <span class="subtitle">ResNet-50 + LoRA Fine-Tuning | TMI-102 PaAC IIT Roorkee</span>
+    </header>
+
+    <section>
+      <h2>📊 Results</h2>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>Model</th><th>Parameters</th><th>Accuracy</th><th>Time/Epoch</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Frozen Baseline</td><td>2K</td><td>55.67%</td><td>9s</td></tr>
+            <tr><td>Full Fine-Tune</td><td>25.6M</td><td class="highlight">97.28%</td><td>146s</td></tr>
+            <tr><td>LoRA (r=4)</td><td>409K</td><td class="highlight">94.77%</td><td>48s</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>About Me</h2>
+      <p><strong>Name:</strong> Vedant Pandya<br>
+      <strong>Roll No:</strong> 26323043<br>
+      <strong>Course:</strong> TMI-102</p>
+    </section>
+
+    <section>
+      <h2>What I Learned</h2>
+      <ul>
+        <li>Transfer learning: a pretrained ResNet-50 can be adapted to classify galaxies.</li>
+        <li>LoRA gives near full fine-tuning accuracy while training  on way fewer number of parameters.</li>
+        <li>Grad-CAM helps check whether the model focuses on meaningful galaxy features required to classify them.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>🔗 Links</h2>
+      <ul>
+        <li><a href="https://github.com/vedantpandya474/tmi102">GitHub Repository</a></li>
+      </ul>
+    </section>
+
+    <section class="finding">
+      <h2>🔬 Key Finding</h2>
+      <p>LoRA achieves <strong>94.77% accuracy</strong> with only <strong>1.6%</strong> of the
+      trainable parameters — a 98.4% reduction with only 2.5% accuracy drop.</p>
+    </section>
+
+    <footer>
+      TMI-102 · PaAC IIT Roorkee · 2026
+    </footer>
+  </div>
+</body>
+</html>
